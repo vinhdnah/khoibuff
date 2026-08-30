@@ -29,6 +29,7 @@ export const AdminServicesPage: React.FC = () => {
   const [editingService, setEditingService] = useState<Service | null>(null);
   const [editPrice, setEditPrice] = useState<number>(0);
   const [editProviderPrice, setEditProviderPrice] = useState<number>(0);
+  const [editProviderServiceId, setEditProviderServiceId] = useState<string>('');
   const [editMin, setEditMin] = useState<number>(100);
   const [editMax, setEditMax] = useState<number>(100000);
   const [editSpeed, setEditSpeed] = useState<string>('');
@@ -54,6 +55,7 @@ export const AdminServicesPage: React.FC = () => {
     setEditingService(service);
     setEditPrice(service.price_per_1000);
     setEditProviderPrice(service.provider_price_per_1000 || 0);
+    setEditProviderServiceId(service.provider_service_id || '');
     setEditMin(service.min_quantity);
     setEditMax(service.max_quantity);
     setEditSpeed(service.average_speed || '5-15 phút');
@@ -68,6 +70,7 @@ export const AdminServicesPage: React.FC = () => {
       await serviceCatalogService.updateService(editingService.id, {
         price_per_1000: editPrice,
         provider_price_per_1000: editProviderPrice,
+        provider_service_id: editProviderServiceId.trim() || undefined,
         min_quantity: editMin,
         max_quantity: editMax,
         average_speed: editSpeed,
@@ -288,12 +291,21 @@ export const AdminServicesPage: React.FC = () => {
               />
             </div>
 
-            <Input
-              label="Tốc độ ước tính"
-              value={editSpeed}
-              onChange={(e) => setEditSpeed(e.target.value)}
-              placeholder="Ví dụ: 5-15 phút"
-            />
+            <div className="grid grid-cols-2 gap-3">
+              <Input
+                label="Mã ID Dịch Vụ Provider (tangliketym.click)"
+                placeholder="Ví dụ: 1477"
+                value={editProviderServiceId}
+                onChange={(e) => setEditProviderServiceId(e.target.value)}
+              />
+
+              <Input
+                label="Tốc độ ước tính"
+                value={editSpeed}
+                onChange={(e) => setEditSpeed(e.target.value)}
+                placeholder="Ví dụ: 5-15 phút"
+              />
+            </div>
 
             <div className="flex justify-end gap-2 pt-3 border-t border-slate-800">
               <Button variant="ghost" type="button" onClick={() => setEditingService(null)}>

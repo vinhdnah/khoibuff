@@ -70,8 +70,14 @@ export const orderService = {
     // Gọi API Provider tại thời điểm Admin bấm duyệt
     try {
       const provider = ProviderFactory.getProvider();
+      const services = LocalStore.getServices();
+      const matchedSrv = services.find(
+        (s) => s.id === order.service_id || s.service_code === order.service_code
+      );
+      const targetServiceId = matchedSrv?.provider_service_id || order.service_code || order.service_id || '';
+
       const provRes = await provider.createOrder({
-        serviceId: order.service_code || order.service_id || '',
+        serviceId: targetServiceId,
         target: order.target_url,
         quantity: order.quantity,
         comments: order.custom_comments || undefined,
