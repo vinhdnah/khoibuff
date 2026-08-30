@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { adminService } from '../../services/adminService';
 import { orderService } from '../../services/orderService';
 import { useAuthStore } from '../../stores/authStore';
@@ -20,6 +21,8 @@ import {
   Clock,
   Layers,
   FileText,
+  Headphones,
+  ArrowRight,
 } from 'lucide-react';
 import {
   ResponsiveContainer,
@@ -74,6 +77,60 @@ export const AdminDashboardPage: React.FC = () => {
     }
   };
 
+  const adminShortcuts = [
+    {
+      title: 'Quản Lý Đơn Hàng',
+      desc: 'Chi tiết, đồng bộ & cập nhật đơn',
+      to: '/admin/orders',
+      icon: ShoppingCart,
+      color: 'text-blue-400',
+      border: 'hover:border-blue-500/50',
+      badge: stats ? `${stats.totalOrders} đơn` : undefined,
+    },
+    {
+      title: 'Dịch Vụ & Giá Bán',
+      desc: 'Cấu hình giá, bật/tắt dịch vụ',
+      to: '/admin/services',
+      icon: Layers,
+      color: 'text-pink-400',
+      border: 'hover:border-pink-500/50',
+    },
+    {
+      title: 'Quản Lý Người Dùng',
+      desc: 'Cộng/trừ số dư & phân quyền',
+      to: '/admin/users',
+      icon: Users,
+      color: 'text-emerald-400',
+      border: 'hover:border-emerald-500/50',
+      badge: stats ? `${stats.totalUsers} TV` : undefined,
+    },
+    {
+      title: 'Lịch Sử Nạp SePay',
+      desc: 'Kiểm soát nạp tiền tự động',
+      to: '/admin/deposits',
+      icon: DollarSign,
+      color: 'text-amber-400',
+      border: 'hover:border-amber-500/50',
+      badge: stats?.pendingDeposits ? `${stats.pendingDeposits} chờ` : undefined,
+    },
+    {
+      title: 'Xử Lý Ticket',
+      desc: 'Hỗ trợ khách hàng & khiếu nại',
+      to: '/admin/tickets',
+      icon: Headphones,
+      color: 'text-cyan-400',
+      border: 'hover:border-cyan-500/50',
+    },
+    {
+      title: 'Nhật Ký Audit Log',
+      desc: 'Theo dõi an toàn hệ thống',
+      to: '/admin/logs',
+      icon: FileText,
+      color: 'text-slate-300',
+      border: 'hover:border-slate-500/50',
+    },
+  ];
+
   return (
     <div className="space-y-6">
       {/* Top Banner */}
@@ -101,6 +158,47 @@ export const AdminDashboardPage: React.FC = () => {
           >
             Đồng Bộ Provider
           </Button>
+        </div>
+      </div>
+
+      {/* Admin Feature Shortcuts (Crucial for Mobile Navigation) */}
+      <div className="space-y-2.5">
+        <div className="flex items-center justify-between">
+          <span className="text-xs font-bold uppercase tracking-wider text-purple-400">
+            Danh Mục Chức Năng Quản Trị
+          </span>
+          <span className="text-[11px] text-slate-500">Nhấn để chuyển nhanh</span>
+        </div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2.5 sm:gap-3">
+          {adminShortcuts.map((item) => {
+            const Icon = item.icon;
+            return (
+              <Link
+                key={item.to}
+                to={item.to}
+                className={`p-3.5 rounded-2xl bg-surface/90 border border-slate-800/90 hover:bg-slate-800/80 transition-all flex flex-col justify-between group ${item.border} shadow-sm hover:scale-[1.02]`}
+              >
+                <div className="flex items-center justify-between mb-2">
+                  <div className={`p-2 rounded-xl bg-slate-900 border border-slate-800 ${item.color}`}>
+                    <Icon className="w-4 h-4" />
+                  </div>
+                  {item.badge && (
+                    <span className="text-[9px] font-bold px-1.5 py-0.5 rounded bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                      {item.badge}
+                    </span>
+                  )}
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white group-hover:text-purple-300 transition-colors">
+                    {item.title}
+                  </h4>
+                  <p className="text-[10px] text-slate-400 line-clamp-1 mt-0.5">
+                    {item.desc}
+                  </p>
+                </div>
+              </Link>
+            );
+          })}
         </div>
       </div>
 

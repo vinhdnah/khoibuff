@@ -22,15 +22,12 @@ export const Sidebar: React.FC = () => {
   const { user } = useAuthStore();
 
   const userNavItems = [
-    { to: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
-    { to: '/order/new', label: 'Đặt đơn mới', icon: ShoppingCart, badge: 'Hot' },
+    { to: '/order', label: 'Tạo đơn mới', icon: ShoppingCart, badge: 'Hot' },
     { to: '/orders', label: 'Lịch sử đơn hàng', icon: Clock },
     { to: '/services', label: 'Bảng giá dịch vụ', icon: ListFilter },
-    { to: '/deposit', label: 'Nạp tiền VietQR', icon: CreditCard },
-    { to: '/transactions', label: 'Lịch sử giao dịch', icon: History },
-    { to: '/api-docs', label: 'Tích hợp API', icon: Code2 },
-    { to: '/tickets', label: 'Hỗ trợ kỹ thuật', icon: Headphones },
-    { to: '/settings', label: 'Cài đặt tài khoản', icon: Settings },
+    { to: '/wallet', label: 'Ví & Nạp tiền', icon: CreditCard },
+    { to: '/support', label: 'Hỗ trợ kỹ thuật', icon: Headphones },
+    { to: '/account', label: 'Cài đặt tài khoản', icon: Settings },
   ];
 
   const adminNavItems = [

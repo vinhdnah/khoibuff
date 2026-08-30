@@ -209,13 +209,44 @@ export const Navbar: React.FC = () => {
 
                       {/* Admin Section */}
                       {user.role === 'admin' && (
-                        <Link
-                          to="/admin"
-                          className="flex items-center gap-2.5 px-3 py-2 rounded-xl text-purple-300 hover:text-white hover:bg-purple-900/40 font-bold border border-purple-500/30"
-                        >
-                          <Shield className="w-4 h-4 text-purple-400" />
-                          <span>Trang Quản Trị Admin</span>
-                        </Link>
+                        <div className="py-1 border-t border-purple-900/50 space-y-0.5 bg-purple-950/20 rounded-xl p-1">
+                          <div className="px-2.5 py-1 flex items-center justify-between">
+                            <span className="text-[10px] uppercase font-bold text-purple-400">
+                              Quản Trị Admin
+                            </span>
+                            <span className="text-[9px] px-1.5 py-0.2 rounded bg-purple-500/20 text-purple-300 font-bold border border-purple-500/30">
+                              ADMIN
+                            </span>
+                          </div>
+                          <Link
+                            to="/admin"
+                            className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-purple-200 hover:text-white hover:bg-purple-900/50 font-semibold"
+                          >
+                            <Shield className="w-4 h-4 text-purple-400" />
+                            <span>Dashboard Admin</span>
+                          </Link>
+                          <Link
+                            to="/admin/orders"
+                            className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-purple-900/40 font-medium"
+                          >
+                            <ShoppingBag className="w-4 h-4 text-blue-400" />
+                            <span>Quản Lý Đơn Hàng</span>
+                          </Link>
+                          <Link
+                            to="/admin/services"
+                            className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-purple-900/40 font-medium"
+                          >
+                            <Layers className="w-4 h-4 text-pink-400" />
+                            <span>Dịch Vụ & Giá Bán</span>
+                          </Link>
+                          <Link
+                            to="/admin/users"
+                            className="flex items-center gap-2.5 px-2.5 py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-purple-900/40 font-medium"
+                          >
+                            <User className="w-4 h-4 text-emerald-400" />
+                            <span>Quản Lý Thành Viên</span>
+                          </Link>
+                        </div>
                       )}
 
                       {/* Logout */}
