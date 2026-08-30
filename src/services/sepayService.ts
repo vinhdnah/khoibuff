@@ -40,35 +40,38 @@ export const sepayService = {
    * Tra cứu danh sách giao dịch gần nhất từ API SePay v2
    */
   async fetchRecentTransactions(): Promise<SepayTransaction[]> {
-    try {
-      const url = `${SEPAY_CONFIG.apiUrl}?page=1&per_page=30`;
+    const endpoints = [
+      '/api/sepay-proxy/v2/transactions?page=1&per_page=30',
+      'https://userapi.sepay.vn/v2/transactions?page=1&per_page=30',
+    ];
 
-      const res = await fetch(url, {
-        headers: {
-          Authorization: `Bearer ${SEPAY_CONFIG.apiKey}`,
-          'Content-Type': 'application/json',
-        },
-      });
+    for (const url of endpoints) {
+      try {
+        const res = await fetch(url, {
+          headers: {
+            Authorization: `Bearer ${SEPAY_CONFIG.apiKey}`,
+            'Content-Type': 'application/json',
+          },
+        });
 
-      if (!res.ok) {
-        throw new Error(`SePay API error: ${res.status}`);
-      }
+        if (!res.ok) continue;
 
-      const data = await res.json();
-      if (data && Array.isArray(data.data)) {
-        return data.data;
+        const data = await res.json();
+        if (data && Array.isArray(data.data)) {
+          return data.data;
+        }
+        if (data && Array.isArray(data.transactions)) {
+          return data.transactions;
+        }
+        if (data && Array.isArray(data.messages)) {
+          return data.messages;
+        }
+      } catch (err: any) {
+        // Try next endpoint
       }
-      if (data && Array.isArray(data.transactions)) {
-        return data.transactions;
-      }
-      if (data && Array.isArray(data.messages)) {
-        return data.messages;
-      }
-      return [];
-    } catch (err: any) {
-      console.warn('SePay fetch transactions error:', err.message);
-      return [];
     }
+
+    return [];
   },
 
   /**

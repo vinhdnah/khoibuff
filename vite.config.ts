@@ -14,5 +14,12 @@ export default defineConfig({
     port: 5173,
     host: true,
     allowedHosts: true,
+    proxy: {
+      '/api/sepay-proxy': {
+        target: 'https://userapi.sepay.vn',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api\/sepay-proxy/, ''),
+      },
+    },
   },
 });
