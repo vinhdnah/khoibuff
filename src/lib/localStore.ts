@@ -180,7 +180,14 @@ export class LocalStore {
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
     }));
-    return getStored<Service[]>('services', defaults);
+    const stored = getStored<Service[]>('services', defaults);
+    return stored.map((srv) => {
+      const defaultMatch = defaults.find((d) => d.service_code === srv.service_code);
+      return {
+        ...srv,
+        name: defaultMatch ? defaultMatch.name : srv.name.replace(/^(100k|10k|1k)\s+/i, '').replace(/^(100k|10k|1k)\b/i, ''),
+      };
+    });
   }
 
   static saveServices(services: Service[]): void {

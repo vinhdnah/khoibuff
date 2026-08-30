@@ -44,7 +44,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
   tiktok: {
     tt_like_global: {
       serviceCode: 'TT_LIKE_GLOBAL',
-      name: '1k Tim Tây (Không tụt)',
+      name: 'Tim Tây (Không tụt)',
       category: 'Tim / Like',
       pricePer1000: 15000,
       providerCostPer1000: 8000,
@@ -58,7 +58,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_like_vn: {
       serviceCode: 'TT_LIKE_VN',
-      name: '1k Tim Việt (Không tụt)',
+      name: 'Tim Việt (Không tụt)',
       category: 'Tim / Like',
       pricePer1000: 30000,
       providerCostPer1000: 18000,
@@ -73,7 +73,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_view_fast: {
       serviceCode: 'TT_VIEW_FAST',
-      name: '1k View (Không tụt)',
+      name: 'Lượt Xem Video (Siêu tốc)',
       category: 'Lượt xem (View)',
       pricePer1000: 5000,
       providerCostPer1000: 1500,
@@ -88,9 +88,9 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_view_bulk: {
       serviceCode: 'TT_VIEW_BULK',
-      name: '10k View (Không tụt)',
+      name: 'Lượt Xem Video (Số lượng lớn)',
       category: 'Lượt xem (View)',
-      pricePer1000: 1500, // 15.000đ cho 10k view = 1.500đ / 1k
+      pricePer1000: 1500, // 1.500đ / 1.000 view
       providerCostPer1000: 600,
       min: 10000,
       max: 50000000,
@@ -103,7 +103,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_fav: {
       serviceCode: 'TT_FAV',
-      name: '1k Yêu thích (Save)',
+      name: 'Lưu Yêu Thích (Save)',
       category: 'Yêu thích / Save',
       pricePer1000: 3000,
       providerCostPer1000: 1200,
@@ -117,7 +117,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_share: {
       serviceCode: 'TT_SHARE',
-      name: '1k Share video',
+      name: 'Chia Sẻ Video (Share)',
       category: 'Chia sẻ (Share)',
       pricePer1000: 5000,
       providerCostPer1000: 2000,
@@ -131,7 +131,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_cmt_real_vn: {
       serviceCode: 'TT_CMT_REAL_VN',
-      name: '1k Bình luận Việt thật',
+      name: 'Bình Luận Việt Thật',
       category: 'Bình luận (Comment)',
       pricePer1000: 55000,
       providerCostPer1000: 35000,
@@ -146,7 +146,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_cmt_like: {
       serviceCode: 'TT_CMT_LIKE',
-      name: '1k Tim Bình luận',
+      name: 'Tim Bình Luận (Top Comment)',
       category: 'Bình luận (Comment)',
       pricePer1000: 15000,
       providerCostPer1000: 7000,
@@ -160,7 +160,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_follow_vn_slow: {
       serviceCode: 'TT_FOLLOW_VN_SLOW',
-      name: '1k Follow Việt / Tây (Chậm ko tụt)',
+      name: 'Follow Việt / Tây (Chậm không tụt)',
       category: 'Theo dõi (Follow)',
       pricePer1000: 60000,
       providerCostPer1000: 38000,
@@ -175,7 +175,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     tt_follow_global: {
       serviceCode: 'TT_FOLLOW_GLOBAL',
-      name: '1k Follow Tây (Không tụt)',
+      name: 'Follow Tây (Không tụt)',
       category: 'Theo dõi (Follow)',
       pricePer1000: 130000,
       providerCostPer1000: 85000,
@@ -192,7 +192,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
   facebook: {
     fb_like_post: {
       serviceCode: 'FB_LIKE_POST',
-      name: '1k Like Tây / Việt',
+      name: 'Like Bài Viết (Tây / Việt)',
       category: 'Like bài viết',
       pricePer1000: 25000,
       providerCostPer1000: 12000,
@@ -207,7 +207,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_view_video: {
       serviceCode: 'FB_VIEW_VIDEO',
-      name: '1k View video',
+      name: 'Lượt Xem Video Reels / Watch',
       category: 'Lượt xem (View)',
       pricePer1000: 5000,
       providerCostPer1000: 1800,
@@ -221,9 +221,9 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_view_bulk: {
       serviceCode: 'FB_VIEW_BULK',
-      name: '10k View video',
+      name: 'Lượt Xem Video (Số lượng lớn)',
       category: 'Lượt xem (View)',
-      pricePer1000: 1500, // 15.000đ cho 10k view
+      pricePer1000: 1500, // 1.500đ / 1.000 view
       providerCostPer1000: 600,
       min: 10000,
       max: 20000000,
@@ -235,7 +235,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_share_post: {
       serviceCode: 'FB_SHARE_POST',
-      name: '1k Share bài viết',
+      name: 'Chia Sẻ Bài Viết (Share)',
       category: 'Chia sẻ (Share)',
       pricePer1000: 5000,
       providerCostPer1000: 2200,
@@ -249,7 +249,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_cmt_real_vn: {
       serviceCode: 'FB_CMT_REAL_VN',
-      name: '1k Bình luận Việt thật',
+      name: 'Bình Luận Việt Thật',
       category: 'Bình luận (Comment)',
       pricePer1000: 55000,
       providerCostPer1000: 32000,
@@ -264,7 +264,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_follow_page_user: {
       serviceCode: 'FB_FOLLOW_PAGE_USER',
-      name: '1k Follow Page / Cá nhân',
+      name: 'Follow Page / Cá Nhân',
       category: 'Theo dõi (Follow)',
       pricePer1000: 45000,
       providerCostPer1000: 26000,
@@ -279,7 +279,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_view_story: {
       serviceCode: 'FB_VIEW_STORY',
-      name: '1k View Story 24h',
+      name: 'Lượt Xem Story 24H',
       category: 'Story',
       pricePer1000: 15000,
       providerCostPer1000: 7000,
@@ -293,7 +293,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_group_member: {
       serviceCode: 'FB_GROUP_MEMBER',
-      name: '1k Thành viên nhóm Việt',
+      name: 'Thành Viên Nhóm Việt',
       category: 'Thành viên Group',
       pricePer1000: 25000,
       providerCostPer1000: 14000,
@@ -307,7 +307,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     fb_live_120m: {
       serviceCode: 'FB_LIVE_120M',
-      name: '1k Mắt xem Livestream (120 phút)',
+      name: 'Mắt Xem Livestream (120 phút)',
       category: 'Livestream',
       pricePer1000: 70000,
       providerCostPer1000: 42000,
@@ -325,7 +325,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
   instagram: {
     ig_follow_global: {
       serviceCode: 'IG_FOLLOW_GLOBAL',
-      name: '1k Follow Tây',
+      name: 'Follow Tây Quốc Tế',
       category: 'Theo dõi (Follow)',
       pricePer1000: 30000,
       providerCostPer1000: 16000,
@@ -339,7 +339,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_follow_vn: {
       serviceCode: 'IG_FOLLOW_VN',
-      name: '1k Follow Việt',
+      name: 'Follow Việt Thật',
       category: 'Theo dõi (Follow)',
       pricePer1000: 65000,
       providerCostPer1000: 40000,
@@ -354,7 +354,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_like_global: {
       serviceCode: 'IG_LIKE_GLOBAL',
-      name: '1k Like Tây',
+      name: 'Like / Tim Tây',
       category: 'Like / Tim',
       pricePer1000: 15000,
       providerCostPer1000: 7000,
@@ -368,7 +368,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_like_vn: {
       serviceCode: 'IG_LIKE_VN',
-      name: '1k Like Việt',
+      name: 'Like / Tim Việt',
       category: 'Like / Tim',
       pricePer1000: 35000,
       providerCostPer1000: 20000,
@@ -382,7 +382,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_view_reel: {
       serviceCode: 'IG_VIEW_REEL',
-      name: '1k View',
+      name: 'Lượt Xem Reel / Video',
       category: 'Lượt xem (View)',
       pricePer1000: 5000,
       providerCostPer1000: 1800,
@@ -396,9 +396,9 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_view_100k: {
       serviceCode: 'IG_VIEW_100K',
-      name: '100k View (Gói lớn)',
+      name: 'Lượt Xem Video (Số lượng lớn)',
       category: 'Lượt xem (View)',
-      pricePer1000: 400, // 40.000đ cho 100k view = 400đ / 1k
+      pricePer1000: 400, // 400đ / 1.000 view
       providerCostPer1000: 180,
       min: 100000,
       max: 20000000,
@@ -411,7 +411,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_save_post: {
       serviceCode: 'IG_SAVE_POST',
-      name: '1k Yêu thích (Save)',
+      name: 'Lưu Bài Viết (Save)',
       category: 'Save & Share',
       pricePer1000: 5000,
       providerCostPer1000: 2000,
@@ -425,7 +425,7 @@ export const SERVICE_PRICING: Record<string, Record<string, ServiceItemConfig>> 
     },
     ig_share_post: {
       serviceCode: 'IG_SHARE_POST',
-      name: '1k Share bài viết',
+      name: 'Chia Sẻ Bài Viết (Share)',
       category: 'Save & Share',
       pricePer1000: 5000,
       providerCostPer1000: 2000,

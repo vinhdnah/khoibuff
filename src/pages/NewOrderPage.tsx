@@ -514,8 +514,9 @@ export const NewOrderPage: React.FC = () => {
                           </span>
 
                           {/* Price Badge */}
-                          <span className="px-2.5 py-0.5 rounded-md bg-blue-600 text-white font-bold text-xs shrink-0 shadow-sm">
-                            {formatVND(srv.price_per_1000)}
+                          <span className="px-2.5 py-0.5 rounded-md bg-blue-600 text-white font-bold text-xs shrink-0 shadow-sm flex items-center gap-1">
+                            <span>{formatVND(srv.price_per_1000)}</span>
+                            <span className="text-[10px] text-blue-200 font-normal">/ 1.000</span>
                           </span>
 
                           {/* Dash */}
@@ -564,9 +565,9 @@ export const NewOrderPage: React.FC = () => {
 
                 <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                   <div className="p-2.5 rounded-xl bg-slate-800/50 border border-slate-800">
-                    <span className="text-slate-500 text-[10px] block font-medium">Đơn giá:</span>
+                    <span className="text-slate-500 text-[10px] block font-medium">Đơn giá (/ 1.000):</span>
                     <span className="font-extrabold text-emerald-400 font-mono text-sm">
-                      {formatVND(activeService.price_per_1000)} / 1k
+                      {formatVND(activeService.price_per_1000)}
                     </span>
                   </div>
                   <div className="p-2.5 rounded-xl bg-slate-800/50 border border-slate-800">
@@ -712,7 +713,7 @@ export const NewOrderPage: React.FC = () => {
                 {formatVND(totalPrice)}
               </span>
               <span className="text-xs text-slate-500">
-                {isComboMode ? '(Trọn gói combo)' : `(${formatNumber(quantity)} @ ${formatVND(activeService?.price_per_1000 || 0)}/1k)`}
+                {isComboMode ? '(Trọn gói combo)' : `(${formatNumber(quantity)} tương tác @ ${formatVND(activeService?.price_per_1000 || 0)} / 1.000)`}
               </span>
             </div>
           </div>

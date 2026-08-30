@@ -27,44 +27,44 @@ ON CONFLICT (slug) DO UPDATE SET price = EXCLUDED.price, items = EXCLUDED.items;
 -- 4. Insert Services (From Image 2 and Prompt specifications)
 -- TIKTOK SERVICES
 INSERT INTO public.services (platform_id, service_code, name, slug, description, category, min_quantity, max_quantity, price_per_1000, provider_price_per_1000, refill_supported, cancel_supported, average_speed, sort_order) VALUES
-('11111111-1111-1111-1111-111111111101', 'TT_LIKE_GLOBAL', '1k Tim Tây (Không tụt)', '1k-tim-tay-khong-tut', 'Tim quốc tế chất lượng cao, tốc độ ổn định, bảo hành vĩnh viễn', 'Tim / Like', 100, 500000, 15000.00, 8000.00, true, true, '5-15 phút', 1),
-('11111111-1111-1111-1111-111111111101', 'TT_LIKE_VN', '1k Tim Việt (Không tụt)', '1k-tim-viet-khong-tut', 'Tim tài khoản người dùng Việt Nam thật 100%, tăng tương tác chuẩn', 'Tim / Like', 100, 200000, 30000.00, 18000.00, true, true, '5-30 phút', 2),
-('11111111-1111-1111-1111-111111111101', 'TT_VIEW_FAST', '1k View (Không tụt)', '1k-view-khong-tut', 'Tăng lượt xem video TikTok siêu tốc độ, hỗ trợ cắn xu hướng', 'Lượt xem (View)', 1000, 10000000, 5000.00, 1500.00, false, false, '1-5 phút', 3),
-('11111111-1111-1111-1111-111111111101', 'TT_VIEW_BULK', '10k View (Không tụt)', '10k-view-khong-tut', 'Gói View số lượng lớn giá ưu đãi đặc biệt', 'Lượt xem (View)', 10000, 50000000, 1500.00, 600.00, false, false, '5-15 phút', 4),
-('11111111-1111-1111-1111-111111111101', 'TT_FAV', '1k Yêu thích (Save)', '1k-yeu-thich', 'Tăng lưu video vào danh sách yêu thích', 'Yêu thích / Save', 100, 100000, 3000.00, 1200.00, true, false, '10-30 phút', 5),
-('11111111-1111-1111-1111-111111111101', 'TT_SHARE', '1k Share video', '1k-share-video', 'Tăng chia sẻ video TikTok đẩy mạnh đề xuất', 'Chia sẻ (Share)', 100, 50000, 5000.00, 2000.00, false, false, '5-20 phút', 6),
-('11111111-1111-1111-1111-111111111101', 'TT_CMT_REAL_VN', '1k Bình luận Việt thật', '1k-binh-luan-viet-that', 'Bình luận theo nội dung tùy chỉnh từ người dùng Việt thật', 'Bình luận (Comment)', 10, 5000, 55000.00, 35000.00, false, true, '15-60 phút', 7),
-('11111111-1111-1111-1111-111111111101', 'TT_CMT_LIKE', '1k Tim Bình luận', '1k-tim-binh-luan', 'Thả tim đẩy top bình luận nổi bật trên video', 'Bình luận (Comment)', 50, 20000, 15000.00, 7000.00, true, false, '5-25 phút', 8),
-('11111111-1111-1111-1111-111111111101', 'TT_FOLLOW_VN_SLOW', '1k Follow Việt / Tây (Chậm ko tụt)', '1k-follow-viet-tay-cham', 'Tăng theo dõi tự nhiên an toàn tuyệt đối, bảo hành 30 ngày', 'Theo dõi (Follow)', 100, 50000, 60000.00, 38000.00, true, true, '1-6 giờ', 9),
-('11111111-1111-1111-1111-111111111101', 'TT_FOLLOW_GLOBAL', '1k Follow Tây (Không tụt)', '1k-follow-tay-khong-tut', 'Follow quốc tế tốc độ cao, tài khoản avatar đầy đủ', 'Theo dõi (Follow)', 100, 100000, 130000.00, 85000.00, true, true, '30-90 phút', 10),
+('11111111-1111-1111-1111-111111111101', 'TT_LIKE_GLOBAL', 'Tim Tây (Không tụt)', 'tim-tay-khong-tut', 'Tim quốc tế chất lượng cao, tốc độ ổn định, bảo hành vĩnh viễn', 'Tim / Like', 100, 500000, 15000.00, 8000.00, true, true, '5-15 phút', 1),
+('11111111-1111-1111-1111-111111111101', 'TT_LIKE_VN', 'Tim Việt (Không tụt)', 'tim-viet-khong-tut', 'Tim tài khoản người dùng Việt Nam thật 100%, tăng tương tác chuẩn', 'Tim / Like', 100, 200000, 30000.00, 18000.00, true, true, '5-30 phút', 2),
+('11111111-1111-1111-1111-111111111101', 'TT_VIEW_FAST', 'Lượt Xem Video (Siêu tốc)', 'view-sieu-toc-khong-tut', 'Tăng lượt xem video TikTok siêu tốc độ, hỗ trợ cắn xu hướng', 'Lượt xem (View)', 1000, 10000000, 5000.00, 1500.00, false, false, '1-5 phút', 3),
+('11111111-1111-1111-1111-111111111101', 'TT_VIEW_BULK', 'Lượt Xem Video (Số lượng lớn)', 'view-so-luong-lon', 'Gói View số lượng lớn giá ưu đãi đặc biệt', 'Lượt xem (View)', 10000, 50000000, 1500.00, 600.00, false, false, '5-15 phút', 4),
+('11111111-1111-1111-1111-111111111101', 'TT_FAV', 'Lưu Yêu Thích (Save)', 'yeu-thich-save', 'Tăng lưu video vào danh sách yêu thích', 'Yêu thích / Save', 100, 100000, 3000.00, 1200.00, true, false, '10-30 phút', 5),
+('11111111-1111-1111-1111-111111111101', 'TT_SHARE', 'Chia Sẻ Video (Share)', 'share-video', 'Tăng chia sẻ video TikTok đẩy mạnh đề xuất', 'Chia sẻ (Share)', 100, 50000, 5000.00, 2000.00, false, false, '5-20 phút', 6),
+('11111111-1111-1111-1111-111111111101', 'TT_CMT_REAL_VN', 'Bình Luận Việt Thật', 'binh-luan-viet-that', 'Bình luận theo nội dung tùy chỉnh từ người dùng Việt thật', 'Bình luận (Comment)', 10, 5000, 55000.00, 35000.00, false, true, '15-60 phút', 7),
+('11111111-1111-1111-1111-111111111101', 'TT_CMT_LIKE', 'Tim Bình Luận (Top Comment)', 'tim-binh-luan', 'Thả tim đẩy top bình luận nổi bật trên video', 'Bình luận (Comment)', 50, 20000, 15000.00, 7000.00, true, false, '5-25 phút', 8),
+('11111111-1111-1111-1111-111111111101', 'TT_FOLLOW_VN_SLOW', 'Follow Việt / Tây (Chậm không tụt)', 'follow-viet-tay-cham', 'Tăng theo dõi tự nhiên an toàn tuyệt đối, bảo hành 30 ngày', 'Theo dõi (Follow)', 100, 50000, 60000.00, 38000.00, true, true, '1-6 giờ', 9),
+('11111111-1111-1111-1111-111111111101', 'TT_FOLLOW_GLOBAL', 'Follow Tây (Không tụt)', 'follow-tay-khong-tut', 'Follow quốc tế tốc độ cao, tài khoản avatar đầy đủ', 'Theo dõi (Follow)', 100, 100000, 130000.00, 85000.00, true, true, '30-90 phút', 10),
 ('11111111-1111-1111-1111-111111111101', 'TT_LIVE_VIEW', 'Tăng view livestream TikTok', 'tang-view-livestream-tiktok', 'Mắt xem livestream ổn định trong suốt phiên live', 'Livestream', 50, 10000, 45000.00, 25000.00, false, false, 'Ngay lập tức', 11),
 ('11111111-1111-1111-1111-111111111101', 'TT_LIVE_LIKE', 'Tăng tim livestream TikTok', 'tang-tim-livestream-tiktok', 'Thả tim liên tục tạo hiệu ứng sôi động cho phòng live', 'Livestream', 1000, 1000000, 8000.00, 3500.00, false, false, 'Ngay lập tức', 12)
-ON CONFLICT (service_code) DO NOTHING;
+ON CONFLICT (service_code) DO UPDATE SET name = EXCLUDED.name, slug = EXCLUDED.slug;
 
 -- FACEBOOK SERVICES
 INSERT INTO public.services (platform_id, service_code, name, slug, description, category, min_quantity, max_quantity, price_per_1000, provider_price_per_1000, refill_supported, cancel_supported, average_speed, sort_order) VALUES
-('11111111-1111-1111-1111-111111111102', 'FB_LIKE_POST', '1k Like Tây / Việt bài viết', '1k-like-tay-viet', 'Tăng like bài viết trang cá nhân hoặc fanpage chất lượng', 'Like bài viết', 100, 100000, 25000.00, 12000.00, true, true, '5-20 phút', 1),
-('11111111-1111-1111-1111-111111111102', 'FB_VIEW_VIDEO', '1k View video', '1k-view-video-fb', 'Tăng lượt xem video Facebook Reels / Watch', 'Lượt xem (View)', 1000, 5000000, 5000.00, 1800.00, false, false, '2-10 phút', 2),
-('11111111-1111-1111-1111-111111111102', 'FB_VIEW_BULK', '10k View video', '10k-view-video-fb', 'Gói xem video số lượng lớn Facebook giá cực tốt', 'Lượt xem (View)', 10000, 20000000, 1500.00, 600.00, false, false, '5-20 phút', 3),
-('11111111-1111-1111-1111-111111111102', 'FB_SHARE_POST', '1k Share bài viết', '1k-share-fb', 'Share bài viết lên tường công khai', 'Chia sẻ (Share)', 100, 20000, 5000.00, 2200.00, false, false, '10-30 phút', 4),
-('11111111-1111-1111-1111-111111111102', 'FB_CMT_REAL_VN', '1k Bình luận Việt thật', '1k-cmt-viet-that-fb', 'Bình luận tùy chọn theo kịch bản từ nick Việt thật', 'Bình luận (Comment)', 10, 5000, 55000.00, 32000.00, false, true, '15-60 phút', 5),
-('11111111-1111-1111-1111-111111111102', 'FB_FOLLOW_PAGE_USER', '1k Follow Page / Cá nhân', '1k-follow-page-ca-nhan', 'Tăng người theo dõi profile cá nhân hoặc Fanpage chế độ chuyên nghiệp', 'Theo dõi (Follow)', 100, 100000, 45000.00, 26000.00, true, true, '30-120 phút', 6),
-('11111111-1111-1111-1111-111111111102', 'FB_VIEW_STORY', '1k View Story 24h', '1k-view-story-fb', 'Tăng mắt xem tin Story Facebook', 'Story', 500, 50000, 15000.00, 7000.00, false, false, '5-15 phút', 7),
-('11111111-1111-1111-1111-111111111102', 'FB_GROUP_MEMBER', '1k Thành viên nhóm Việt', '1k-thanh-vien-nhom-viet', 'Tăng thành viên group Facebook người dùng Việt thật', 'Thành viên Group', 500, 100000, 25000.00, 14000.00, true, false, '1-6 giờ', 8),
-('11111111-1111-1111-1111-111111111102', 'FB_LIVE_120M', '1k Mắt xem Livestream (120 phút)', '1k-mat-live-120m', 'Giữ mắt xem livestream Facebook liên tục 120 phút', 'Livestream', 50, 5000, 70000.00, 42000.00, false, false, 'Ngay lập tức', 9)
-ON CONFLICT (service_code) DO NOTHING;
+('11111111-1111-1111-1111-111111111102', 'FB_LIKE_POST', 'Like Bài Viết (Tây / Việt)', 'like-tay-viet', 'Tăng like bài viết trang cá nhân hoặc fanpage chất lượng', 'Like bài viết', 100, 100000, 25000.00, 12000.00, true, true, '5-20 phút', 1),
+('11111111-1111-1111-1111-111111111102', 'FB_VIEW_VIDEO', 'Lượt Xem Video Reels / Watch', 'view-video-fb', 'Tăng lượt xem video Facebook Reels / Watch', 'Lượt xem (View)', 1000, 5000000, 5000.00, 1800.00, false, false, '2-10 phút', 2),
+('11111111-1111-1111-1111-111111111102', 'FB_VIEW_BULK', 'Lượt Xem Video (Số lượng lớn)', 'view-video-bulk-fb', 'Gói xem video số lượng lớn Facebook giá cực tốt', 'Lượt xem (View)', 10000, 20000000, 1500.00, 600.00, false, false, '5-20 phút', 3),
+('11111111-1111-1111-1111-111111111102', 'FB_SHARE_POST', 'Chia Sẻ Bài Viết (Share)', 'share-fb', 'Share bài viết lên tường công khai', 'Chia sẻ (Share)', 100, 20000, 5000.00, 2200.00, false, false, '10-30 phút', 4),
+('11111111-1111-1111-1111-111111111102', 'FB_CMT_REAL_VN', 'Bình Luận Việt Thật', 'cmt-viet-that-fb', 'Bình luận tùy chọn theo kịch bản từ nick Việt thật', 'Bình luận (Comment)', 10, 5000, 55000.00, 32000.00, false, true, '15-60 phút', 5),
+('11111111-1111-1111-1111-111111111102', 'FB_FOLLOW_PAGE_USER', 'Follow Page / Cá Nhân', 'follow-page-ca-nhan', 'Tăng người theo dõi profile cá nhân hoặc Fanpage chế độ chuyên nghiệp', 'Theo dõi (Follow)', 100, 100000, 45000.00, 26000.00, true, true, '30-120 phút', 6),
+('11111111-1111-1111-1111-111111111102', 'FB_VIEW_STORY', 'Lượt Xem Story 24H', 'view-story-fb', 'Tăng mắt xem tin Story Facebook', 'Story', 500, 50000, 15000.00, 7000.00, false, false, '5-15 phút', 7),
+('11111111-1111-1111-1111-111111111102', 'FB_GROUP_MEMBER', 'Thành Viên Nhóm Việt', 'thanh-vien-nhom-viet', 'Tăng thành viên group Facebook người dùng Việt thật', 'Thành viên Group', 500, 100000, 25000.00, 14000.00, true, false, '1-6 giờ', 8),
+('11111111-1111-1111-1111-111111111102', 'FB_LIVE_120M', 'Mắt Xem Livestream (120 phút)', 'mat-live-120m', 'Giữ mắt xem livestream Facebook liên tục 120 phút', 'Livestream', 50, 5000, 70000.00, 42000.00, false, false, 'Ngay lập tức', 9)
+ON CONFLICT (service_code) DO UPDATE SET name = EXCLUDED.name, slug = EXCLUDED.slug;
 
 -- INSTAGRAM SERVICES
 INSERT INTO public.services (platform_id, service_code, name, slug, description, category, min_quantity, max_quantity, price_per_1000, provider_price_per_1000, refill_supported, cancel_supported, average_speed, sort_order) VALUES
-('11111111-1111-1111-1111-111111111103', 'IG_FOLLOW_GLOBAL', '1k Follow Tây (Instagram)', '1k-follow-tay-ig', 'Tăng theo dõi Instagram tài khoản quốc tế có avatar & post', 'Theo dõi (Follow)', 100, 100000, 30000.00, 16000.00, true, true, '15-45 phút', 1),
-('11111111-1111-1111-1111-111111111103', 'IG_FOLLOW_VN', '1k Follow Việt (Instagram)', '1k-follow-viet-ig', 'Tăng theo dõi Instagram người dùng Việt Nam thật', 'Theo dõi (Follow)', 100, 50000, 65000.00, 40000.00, true, true, '30-90 phút', 2),
-('11111111-1111-1111-1111-111111111103', 'IG_LIKE_GLOBAL', '1k Like Tây bài viết / Reel', '1k-like-tay-ig', 'Thả tim bài viết / Reel Instagram quốc tế', 'Like / Tim', 100, 200000, 15000.00, 7000.00, true, true, '5-20 phút', 3),
-('11111111-1111-1111-1111-111111111103', 'IG_LIKE_VN', '1k Like Việt bài viết / Reel', '1k-like-viet-ig', 'Thả tim bài viết / Reel Instagram người dùng Việt', 'Like / Tim', 100, 50000, 35000.00, 20000.00, true, true, '10-30 phút', 4),
-('11111111-1111-1111-1111-111111111103', 'IG_VIEW_REEL', '1k View Reel / Video', '1k-view-ig', 'Lượt xem video Reel Instagram tốc độ tức thì', 'Lượt xem (View)', 1000, 5000000, 5000.00, 1800.00, false, false, '2-10 phút', 5),
-('11111111-1111-1111-1111-111111111103', 'IG_VIEW_100K', '100k View Reel Instagram', '100k-view-ig', 'Gói 100k view siêu ưu đãi cho video dài và Reel', 'Lượt xem (View)', 100000, 20000000, 400.00, 180.00, false, false, '10-60 phút', 6),
-('11111111-1111-1111-1111-111111111103', 'IG_SAVE_POST', '1k Yêu thích (Save post)', '1k-save-post-ig', 'Lưu bài viết Instagram tăng tương tác tự nhiên', 'Save & Share', 100, 50000, 5000.00, 2000.00, true, false, '10-30 phút', 7),
-('11111111-1111-1111-1111-111111111103', 'IG_SHARE_POST', '1k Share bài viết', '1k-share-post-ig', 'Chia sẻ bài viết Instagram', 'Save & Share', 100, 50000, 5000.00, 2000.00, false, false, '10-30 phút', 8)
-ON CONFLICT (service_code) DO NOTHING;
+('11111111-1111-1111-1111-111111111103', 'IG_FOLLOW_GLOBAL', 'Follow Tây Quốc Tế', 'follow-tay-ig', 'Tăng theo dõi Instagram tài khoản quốc tế có avatar & post', 'Theo dõi (Follow)', 100, 100000, 30000.00, 16000.00, true, true, '15-45 phút', 1),
+('11111111-1111-1111-1111-111111111103', 'IG_FOLLOW_VN', 'Follow Việt Thật', 'follow-viet-ig', 'Tăng theo dõi Instagram người dùng Việt Nam thật', 'Theo dõi (Follow)', 100, 50000, 65000.00, 40000.00, true, true, '30-90 phút', 2),
+('11111111-1111-1111-1111-111111111103', 'IG_LIKE_GLOBAL', 'Like / Tim Tây', 'like-tay-ig', 'Thả tim bài viết / Reel Instagram quốc tế', 'Like / Tim', 100, 200000, 15000.00, 7000.00, true, true, '5-20 phút', 3),
+('11111111-1111-1111-1111-111111111103', 'IG_LIKE_VN', 'Like / Tim Việt', 'like-viet-ig', 'Thả tim bài viết / Reel Instagram người dùng Việt', 'Like / Tim', 100, 50000, 35000.00, 20000.00, true, true, '10-30 phút', 4),
+('11111111-1111-1111-1111-111111111103', 'IG_VIEW_REEL', 'Lượt Xem Reel / Video', 'view-reel-ig', 'Lượt xem video Reel Instagram tốc độ tức thì', 'Lượt xem (View)', 1000, 5000000, 5000.00, 1800.00, false, false, '2-10 phút', 5),
+('11111111-1111-1111-1111-111111111103', 'IG_VIEW_100K', 'Lượt Xem Video (Số lượng lớn)', 'view-bulk-ig', 'Gói view siêu ưu đãi cho video dài và Reel', 'Lượt xem (View)', 100000, 20000000, 400.00, 180.00, false, false, '10-60 phút', 6),
+('11111111-1111-1111-1111-111111111103', 'IG_SAVE_POST', 'Lưu Bài Viết (Save)', 'save-post-ig', 'Lưu bài viết Instagram tăng tương tác tự nhiên', 'Save & Share', 100, 50000, 5000.00, 2000.00, true, false, '10-30 phút', 7),
+('11111111-1111-1111-1111-111111111103', 'IG_SHARE_POST', 'Chia Sẻ Bài Viết (Share)', 'share-post-ig', 'Chia sẻ bài viết Instagram', 'Save & Share', 100, 50000, 5000.00, 2000.00, false, false, '10-30 phút', 8)
+ON CONFLICT (service_code) DO UPDATE SET name = EXCLUDED.name, slug = EXCLUDED.slug;
 
 -- YOUTUBE, TELEGRAM, X, FREEFIRE SERVICES
 INSERT INTO public.services (platform_id, service_code, name, slug, description, category, min_quantity, max_quantity, price_per_1000, provider_price_per_1000, refill_supported, cancel_supported, average_speed, sort_order) VALUES

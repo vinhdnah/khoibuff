@@ -167,8 +167,8 @@ export const AdminServicesPage: React.FC = () => {
             <tr>
               <th className="py-3.5 px-3">Mã</th>
               <th className="py-3.5 px-3">Tên dịch vụ</th>
-              <th className="py-3.5 px-3">Giá bán / 1k</th>
-              <th className="py-3.5 px-3">Giá gốc / 1k</th>
+              <th className="py-3.5 px-3">Giá bán (/ 1.000)</th>
+              <th className="py-3.5 px-3">Giá gốc (/ 1.000)</th>
               <th className="py-3.5 px-3">Biên lợi nhuận</th>
               <th className="py-3.5 px-3">Min - Max</th>
               <th className="py-3.5 px-3">Tốc độ</th>

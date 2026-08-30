@@ -177,7 +177,7 @@ print(response.json())`;
       case 'status':
         return `{\n  "success": true,\n  "order_id": "ORD_89A2BF1C_1740742910",\n  "status": "completed",\n  "start_count": 350,\n  "current_count": 1350,\n  "remains": 0,\n  "progress_percentage": 100\n}`;
       case 'services':
-        return `[\n  {\n    "service_code": "TT_LIKE_VN",\n    "name": "1k Tim Việt (Không tụt)",\n    "rate": 30000,\n    "min": 100,\n    "max": 200000,\n    "category": "Tim / Like"\n  }\n]`;
+        return `[\n  {\n    "service_code": "TT_LIKE_VN",\n    "name": "Tim Việt (Không tụt)",\n    "rate": 30000,\n    "min": 100,\n    "max": 200000,\n    "category": "Tim / Like"\n  }\n]`;
       case 'balance':
         return `{\n  "success": true,\n  "balance": 250000,\n  "currency": "VND"\n}`;
     }
