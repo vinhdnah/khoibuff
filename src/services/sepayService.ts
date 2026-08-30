@@ -1,5 +1,7 @@
 import { walletService } from './walletService';
 import { LocalStore } from '../lib/localStore';
+import { supabase, isSupabaseConfigured } from '../lib/supabase';
+import { Deposit } from '../types';
 
 export const SEPAY_CONFIG = {
   apiKey: import.meta.env?.VITE_SEPAY_API_KEY || 'QZTNFZPBS1GVVRZWHUI97CYAAIDSKO2BMWPLJ4VCD0LKAYSFOCLHU0XX4MUPNO58',
@@ -79,6 +81,9 @@ export const sepayService = {
       const credited: Array<{ userId: string; amount: number; memo: string }> = [];
 
       for (const tx of transactions) {
+        const amountIn = Number(tx.amount_in || 0);
+        if (amountIn <= 0) continue;
+
         // 1. Xử lý qua LocalStore
         const result = LocalStore.processIncomingSepayTransaction(tx);
         if (result && result.success && result.userId && result.amount) {
@@ -87,6 +92,60 @@ export const sepayService = {
             amount: result.amount,
             memo: result.memo || '',
           });
+        }
+
+        // 2. Xử lý qua Supabase nếu có
+        if (isSupabaseConfigured) {
+          try {
+            const content = (tx.transaction_content || tx.body || '').toUpperCase();
+            const txId = String(tx.id || tx.reference_number || '');
+
+            const { data: supaDeps } = await supabase
+              .from('deposits')
+              .select('*')
+              .eq('status', 'pending');
+
+            const matchedDep = (supaDeps as Deposit[] | null)?.find(
+              (d: Deposit) => d.transfer_content && content.includes(d.transfer_content.toUpperCase())
+            );
+
+            if (matchedDep) {
+              await supabase
+                .from('deposits')
+                .update({
+                  status: 'completed',
+                  amount: amountIn,
+                  transaction_code: txId,
+                  verified_at: new Date().toISOString(),
+                  updated_at: new Date().toISOString(),
+                })
+                .eq('id', matchedDep.id);
+
+              const { data: prof } = await supabase
+                .from('profiles')
+                .select('balance')
+                .eq('id', matchedDep.user_id)
+                .single();
+
+              if (prof) {
+                const newBal = (Number(prof.balance) || 0) + amountIn;
+                await supabase
+                  .from('profiles')
+                  .update({ balance: newBal, updated_at: new Date().toISOString() })
+                  .eq('id', matchedDep.user_id);
+              }
+
+              if (!result?.success) {
+                credited.push({
+                  userId: matchedDep.user_id,
+                  amount: amountIn,
+                  memo: matchedDep.transfer_content,
+                });
+              }
+            }
+          } catch (e) {
+            console.warn('Supabase sync warning:', e);
+          }
         }
       }
 
