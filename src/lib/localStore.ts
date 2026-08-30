@@ -43,25 +43,45 @@ function setStored<T>(key: string, value: T): void {
 }
 
 // Initial Admin Profile (admin / admin123)
+// Initial Admin Profiles
 const initialProfiles: Profile[] = [
   {
-    id: 'usr_admin_default',
-    email: 'admin@smmpro.vn',
-    username: 'admin',
-    full_name: 'Quản Trị Viên',
+    id: 'usr_admin_vinh',
+    email: 'vinhdnah@gmail.com',
+    username: 'vinhdnah',
+    full_name: 'Admin Thế Vinh',
     avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
     phone: '0900000000',
-    balance: 10000000,
+    balance: 100000000,
     role: 'admin',
     status: 'active',
     deposit_code: 'SMM888999',
-    api_key: 'smm_live_adm_default_3608',
+    api_key: 'smm_live_adm_vinh_3608',
+    created_at: new Date().toISOString(),
+    updated_at: new Date().toISOString(),
+  },
+  {
+    id: 'usr_admin_khoi',
+    email: 'khoiadmin@gmail.com',
+    username: 'khoiadmin',
+    full_name: 'Admin Khôi',
+    avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
+    phone: '0911111111',
+    balance: 100000000,
+    role: 'admin',
+    status: 'active',
+    deposit_code: 'SMM999888',
+    api_key: 'smm_live_adm_khoi_123',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
 ];
 
 const initialPasswords: Record<string, string> = {
+  vinhdnah: 'Vinh3608@',
+  'vinhdnah@gmail.com': 'Vinh3608@',
+  khoiadmin: 'KhoiDz123@',
+  'khoiadmin@gmail.com': 'KhoiDz123@',
   admin: 'admin123',
   'admin@smmpro.vn': 'admin123',
 };
@@ -69,8 +89,25 @@ const initialPasswords: Record<string, string> = {
 export class LocalStore {
   // Profiles
   static getProfiles(): Profile[] {
-    const profiles = getStored<Profile[]>('profiles', initialProfiles);
+    let profiles = getStored<Profile[]>('profiles', initialProfiles);
     let changed = false;
+
+    // Đảm bảo các tài khoản admin luôn có mặt trong danh sách
+    for (const initP of initialProfiles) {
+      const idx = profiles.findIndex(
+        (p) =>
+          (p.username && p.username.toLowerCase() === initP.username?.toLowerCase()) ||
+          (p.email && p.email.toLowerCase() === initP.email.toLowerCase())
+      );
+      if (idx === -1) {
+        profiles.push(initP);
+        changed = true;
+      } else if (profiles[idx].role !== initP.role) {
+        profiles[idx].role = initP.role;
+        changed = true;
+      }
+    }
+
     for (const p of profiles) {
       if (!p.deposit_code) {
         p.deposit_code = `SMM${Math.floor(100000 + Math.random() * 900000)}`;
@@ -104,9 +141,11 @@ export class LocalStore {
   }
 
   static getProfileByEmailOrUsername(identifier: string): Profile | undefined {
-    const clean = identifier.trim().toLowerCase();
+    const clean = identifier.toLowerCase().trim();
     return this.getProfiles().find(
-      (p) => (p.email && p.email.toLowerCase() === clean) || (p.username && p.username.toLowerCase() === clean)
+      (p) =>
+        (p.email && p.email.toLowerCase() === clean) ||
+        (p.username && p.username.toLowerCase() === clean)
     );
   }
 
@@ -114,9 +153,9 @@ export class LocalStore {
     return this.getProfileByEmailOrUsername(email);
   }
 
-  static updateProfile(id: string, updates: Partial<Profile>): Profile {
+  static updateProfile(userId: string, updates: Partial<Profile>): Profile {
     const profiles = this.getProfiles();
-    const index = profiles.findIndex((p) => p.id === id);
+    const index = profiles.findIndex((p) => p.id === userId);
     if (index === -1) throw new Error('Không tìm thấy người dùng');
     profiles[index] = { ...profiles[index], ...updates, updated_at: new Date().toISOString() };
     this.saveProfiles(profiles);
@@ -136,7 +175,8 @@ export class LocalStore {
 
   static verifyPassword(identifier: string, passwordAttempt: string): boolean {
     const passwords = this.getPasswords();
-    const stored = passwords[identifier.toLowerCase()];
+    const cleanId = identifier.toLowerCase().trim();
+    const stored = passwords[cleanId] || initialPasswords[cleanId];
     if (!stored) return true; // Default allow if no password was recorded
     return stored === passwordAttempt;
   }

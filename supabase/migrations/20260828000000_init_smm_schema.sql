@@ -18,6 +18,7 @@ CREATE TABLE IF NOT EXISTS public.profiles (
     status TEXT NOT NULL DEFAULT 'active' CHECK (status IN ('active', 'suspended', 'banned')),
     api_key TEXT UNIQUE,
     api_key_hash TEXT,
+    deposit_code TEXT UNIQUE,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
     updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
 );

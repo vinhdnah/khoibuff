@@ -71,27 +71,49 @@ export const authService = {
   async login(identifier: string, password?: string): Promise<Profile> {
     if (isSupabaseConfigured) {
       const clean = identifier.trim();
-      const { data: profile, error } = await supabase
-        .from('profiles')
-        .select('*')
-        .or(`email.ilike.${clean},username.ilike.${clean}`)
-        .maybeSingle();
-
-      if (error || !profile) {
-        throw new Error('Tài khoản không tồn tại trên hệ thống!');
-      }
+      let emailToAuth = clean.includes('@') ? clean : `${clean}@gmail.com`;
 
       if (password) {
-        const { error: authError } = await supabase.auth.signInWithPassword({
-          email: profile.email,
+        let authRes = await supabase.auth.signInWithPassword({
+          email: emailToAuth,
           password,
         });
-        if (authError) {
-          throw new Error('Mật khẩu không chính xác. Vui lòng kiểm tra lại!');
-        }
-      }
 
-      return profile;
+        // Nếu thất bại và identifier không có @, thử tìm email từ profiles
+        if (authRes.error && !clean.includes('@')) {
+          const { data: p } = await supabase
+            .from('profiles')
+            .select('email')
+            .ilike('username', clean)
+            .maybeSingle();
+
+          if (p?.email) {
+            emailToAuth = p.email;
+            authRes = await supabase.auth.signInWithPassword({
+              email: emailToAuth,
+              password,
+            });
+          }
+        }
+
+        if (authRes.error) {
+          throw new Error('Tài khoản hoặc mật khẩu không chính xác!');
+        }
+
+        // Lấy profile khi đã có session đăng nhập thành công
+        const userId = authRes.data.user?.id;
+        const { data: profile, error } = await supabase
+          .from('profiles')
+          .select('*')
+          .eq('id', userId)
+          .single();
+
+        if (error || !profile) {
+          throw new Error('Không tìm thấy thông tin người dùng trong hệ thống!');
+        }
+
+        return profile;
+      }
     }
 
     // Local / Database Mode
