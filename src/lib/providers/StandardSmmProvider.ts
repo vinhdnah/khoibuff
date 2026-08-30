@@ -13,6 +13,8 @@ export interface StandardSmmProviderConfig {
   slug: string;
   apiUrl: string;
   apiKey: string;
+  /** Nếu true: gửi JSON lên /api/provider (Vercel proxy), không append key vào body */
+  useProxy?: boolean;
 }
 
 export class StandardSmmProvider implements SmmProvider {
@@ -21,15 +23,32 @@ export class StandardSmmProvider implements SmmProvider {
   isMock = false;
   private apiUrl: string;
   private apiKey: string;
+  private useProxy: boolean;
 
   constructor(config: StandardSmmProviderConfig) {
     this.name = config.name;
     this.slug = config.slug;
     this.apiUrl = config.apiUrl;
     this.apiKey = config.apiKey;
+    this.useProxy = config.useProxy ?? false;
   }
 
   private async makeRequest<T = any>(data: Record<string, any>): Promise<T> {
+    if (this.useProxy) {
+      // Production path: gửi JSON lên Vercel serverless proxy
+      // Key được inject server-side, không bao giờ lộ trong JS bundle
+      const res = await fetch(this.apiUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      if (!res.ok) {
+        throw new Error(`Proxy API error: ${res.status} ${res.statusText}`);
+      }
+      return await res.json();
+    }
+
+    // Dev path: gọi trực tiếp với key từ .env
     const formData = new URLSearchParams();
     formData.append('key', this.apiKey);
     Object.entries(data).forEach(([key, val]) => {
@@ -40,9 +59,7 @@ export class StandardSmmProvider implements SmmProvider {
 
     const res = await fetch(this.apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-      },
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: formData.toString(),
     });
 

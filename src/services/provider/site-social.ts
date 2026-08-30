@@ -337,7 +337,11 @@ export class SiteSocialProvider implements SmmProvider {
     if (code.includes('X_VIEW') || code.includes('TWITTER_VIEW')) return '/twitter/view_twitter';
     if (code.includes('X_RETWEET')) return '/twitter/retweet_twitter';
 
-    // Default fallback to TikTok Like
-    return '/tiktok/like_tiktok';
+    // Không tìm thấy endpoint → ném lỗi rõ ràng thay vì fallback ngầm sai dịch vụ
+    throw new Error(
+      `[SiteSocialProvider] Không tìm thấy endpoint cho serviceId: "${serviceCodeOrId}". ` +
+      `Vui lòng kiểm tra lại service_code trong database hoặc cập nhật determineEndpoint().`
+    );
   }
 }
+

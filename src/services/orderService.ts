@@ -65,30 +65,33 @@ export const orderService = {
     if (!order) throw new Error('Không tìm thấy đơn hàng');
     if (order.status !== 'pending') throw new Error(`Đơn hàng đang ở trạng thái "${order.status}", không thể duyệt lại.`);
 
-    let providerOrderId: string | number | undefined;
-
     // Gọi API Provider tại thời điểm Admin bấm duyệt
-    try {
-      const provider = ProviderFactory.getProvider();
-      const services = LocalStore.getServices();
-      const matchedSrv = services.find(
-        (s) => s.id === order.service_id || s.service_code === order.service_code
-      );
-      const targetServiceId = matchedSrv?.provider_service_id || order.service_code || order.service_id || '';
+    const provider = ProviderFactory.getProvider();
+    const services = LocalStore.getServices();
+    const matchedSrv = services.find(
+      (s) => s.id === order.service_id || s.service_code === order.service_code
+    );
+    const targetServiceId = matchedSrv?.provider_service_id || order.service_code || order.service_id || '';
 
-      const provRes = await provider.createOrder({
+    let provRes;
+    try {
+      provRes = await provider.createOrder({
         serviceId: targetServiceId,
         target: order.target_url,
         quantity: order.quantity,
         comments: order.custom_comments || undefined,
       });
-
-      if (provRes.success && provRes.orderId) {
-        providerOrderId = provRes.orderId;
-      }
-    } catch (err) {
-      console.warn('Provider dispatch warning:', err);
+    } catch (err: any) {
+      // Lỗi network / timeout: ném lỗi ra để Admin biết, đơn vẫn ở 'pending'
+      throw new Error(`[Provider] Lỗi kết nối khi dispatch đơn: ${err.message}`);
     }
+
+    if (!provRes.success) {
+      // Provider trả về lỗi logic (ví dụ: link không hợp lệ, hết số dư)
+      throw new Error(`[Provider] Không thể tạo đơn: ${provRes.error || 'Lỗi không xác định từ nhà cung cấp'}`);
+    }
+
+    const providerOrderId = provRes.orderId;
 
     if (isSupabaseConfigured) {
       const { error } = await supabase
@@ -107,6 +110,7 @@ export const orderService = {
     LocalStore.approveAndDispatchOrder(orderId, adminId, providerOrderId ? String(providerOrderId) : undefined);
     return { success: true, providerOrderId };
   },
+
 
   async getUserOrders(userId: string): Promise<Order[]> {
     if (isSupabaseConfigured) {
