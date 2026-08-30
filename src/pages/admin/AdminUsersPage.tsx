@@ -266,7 +266,7 @@ export const AdminUsersPage: React.FC = () => {
               label="Số tiền điều chỉnh (VNĐ)"
               type="number"
               min={1000}
-              step={10000}
+              step={1000}
               value={adjustAmount}
               onChange={(e) => setAdjustAmount(Number(e.target.value))}
               required

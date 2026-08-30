@@ -141,7 +141,7 @@ export const DepositPage: React.FC = () => {
               label="Hoặc nhập số tiền tùy chỉnh (VNĐ)"
               type="number"
               min={10000}
-              step={10000}
+              step={1000}
               value={amount}
               onChange={(e) => setAmount(Number(e.target.value))}
               placeholder="Tối thiểu 10.000 đ"

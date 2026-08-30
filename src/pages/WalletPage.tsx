@@ -233,7 +233,7 @@ export const WalletPage: React.FC = () => {
                 label="Hoặc nhập số tiền khác (VNĐ)"
                 type="number"
                 min={10000}
-                step={10000}
+                step={1000}
                 value={depositAmount}
                 onChange={(e) => setDepositAmount(Number(e.target.value))}
                 placeholder="Tối thiểu 10.000 đ"
