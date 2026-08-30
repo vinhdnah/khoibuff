@@ -28,16 +28,23 @@ import { AdminDepositsPage } from './pages/admin/AdminDepositsPage';
 import { AdminTicketsPage } from './pages/admin/AdminTicketsPage';
 import { AdminLogsPage } from './pages/admin/AdminLogsPage';
 import { useSepayAutoSync } from './hooks/useSepayAutoSync';
+import { useAuthStore } from './stores/authStore';
 
-function GlobalAutoSync() {
+function GlobalAppInit() {
   useSepayAutoSync();
+  const { checkSession } = useAuthStore();
+
+  React.useEffect(() => {
+    checkSession();
+  }, [checkSession]);
+
   return null;
 }
 
 export function App() {
   return (
     <ToastProvider>
-      <GlobalAutoSync />
+      <GlobalAppInit />
       <BrowserRouter>
         <Routes>
           {/* Public Landing Storefront */}

@@ -15,11 +15,24 @@ interface AuthState {
   checkSession: () => Promise<void>;
 }
 
+const getInitialUser = (): Profile | null => {
+  try {
+    const stored = localStorage.getItem('smm_current_user');
+    if (stored) {
+      const parsed = JSON.parse(stored);
+      if (parsed && parsed.id) return parsed;
+    }
+  } catch (e) {}
+  return null;
+};
+
+const initialUser = getInitialUser();
+
 export const useAuthStore = create<AuthState>((set, get) => ({
-  user: null,
+  user: initialUser,
   token: null,
-  role: 'user',
-  isLoading: true,
+  role: initialUser?.role || 'user',
+  isLoading: false,
 
   setUser: (user) => {
     if (user) {
