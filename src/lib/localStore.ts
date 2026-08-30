@@ -42,49 +42,10 @@ function setStored<T>(key: string, value: T): void {
   }
 }
 
-// Initial Admin Profile (admin / admin123)
-// Initial Admin Profiles
-const initialProfiles: Profile[] = [
-  {
-    id: 'usr_admin_vinh',
-    email: 'vinhdnah@gmail.com',
-    username: 'vinhdnah',
-    full_name: 'Admin Thế Vinh',
-    avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    phone: '0900000000',
-    balance: 100000000,
-    role: 'admin',
-    status: 'active',
-    deposit_code: 'SMM888999',
-    api_key: 'smm_live_adm_vinh_3608',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-  {
-    id: 'usr_admin_khoi',
-    email: 'khoiadmin@gmail.com',
-    username: 'khoiadmin',
-    full_name: 'Admin Khôi',
-    avatar_url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=150&auto=format&fit=crop&q=80',
-    phone: '0911111111',
-    balance: 100000000,
-    role: 'admin',
-    status: 'active',
-    deposit_code: 'SMM999888',
-    api_key: 'smm_live_adm_khoi_123',
-    created_at: new Date().toISOString(),
-    updated_at: new Date().toISOString(),
-  },
-];
+// Generic Demo Profile for offline testing only
+const initialProfiles: Profile[] = [];
 
-const initialPasswords: Record<string, string> = {
-  vinhdnah: 'Vinh3608@',
-  'vinhdnah@gmail.com': 'Vinh3608@',
-  khoiadmin: 'KhoiDz123@',
-  'khoiadmin@gmail.com': 'KhoiDz123@',
-  admin: 'admin123',
-  'admin@smmpro.vn': 'admin123',
-};
+const initialPasswords: Record<string, string> = {};
 
 export class LocalStore {
   // Profiles
