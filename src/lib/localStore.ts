@@ -42,28 +42,28 @@ function setStored<T>(key: string, value: T): void {
   }
 }
 
-// Initial Admin Profile (vinhdnah / Vinh3608@)
+// Initial Admin Profile (admin / admin123)
 const initialProfiles: Profile[] = [
   {
-    id: 'usr_admin_vinhdnah',
-    email: 'vinhdnah@gmail.com',
-    username: 'vinhdnah',
-    full_name: 'Hoàng Thế Vinh',
+    id: 'usr_admin_default',
+    email: 'admin@smmpro.vn',
+    username: 'admin',
+    full_name: 'Quản Trị Viên',
     avatar_url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150&auto=format&fit=crop&q=80',
-    phone: '0353633308',
-    balance: 0,
+    phone: '0900000000',
+    balance: 10000000,
     role: 'admin',
     status: 'active',
     deposit_code: 'SMM888999',
-    api_key: 'smm_live_adm_vinhdnah_3608',
+    api_key: 'smm_live_adm_default_3608',
     created_at: new Date().toISOString(),
     updated_at: new Date().toISOString(),
   },
 ];
 
 const initialPasswords: Record<string, string> = {
-  vinhdnah: 'Vinh3608@',
-  'vinhdnah@gmail.com': 'Vinh3608@',
+  admin: 'admin123',
+  'admin@smmpro.vn': 'admin123',
 };
 
 export class LocalStore {
@@ -344,7 +344,7 @@ export class LocalStore {
       payment_method: 'vietqr',
       bank_name: bankName,
       bank_account: bankAccount,
-      account_holder: 'HOANG THE VINH',
+      account_holder: import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || 'BAN QUẢN TRỊ',
       status: 'pending',
       created_at: new Date().toISOString(),
       updated_at: new Date().toISOString(),
@@ -466,9 +466,9 @@ export class LocalStore {
         transfer_content: matchedProfile.deposit_code || 'SMM888999',
         payment_method: 'vietqr',
         status: 'completed',
-        bank_name: tx.bank_brand_name || 'MBBank',
-        bank_account: tx.account_number || '0353633308',
-        account_holder: 'HOANG THE VINH',
+        bank_name: tx.bank_brand_name || import.meta.env?.VITE_SEPAY_BANK_NAME || 'MBBank',
+        bank_account: tx.account_number || import.meta.env?.VITE_SEPAY_BANK_ACCOUNT || '',
+        account_holder: import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || 'BAN QUẢN TRỊ',
         transaction_code: txId,
         verified_at: new Date().toISOString(),
         created_at: tx.transaction_date ? new Date(tx.transaction_date).toISOString() : new Date().toISOString(),

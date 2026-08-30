@@ -272,7 +272,8 @@ export const WalletPage: React.FC = () => {
                     className="w-52 h-52 object-contain rounded-xl"
                     onError={(e) => {
                       // Fallback VietQR napas image if SePay CDN takes time
-                      (e.target as HTMLImageElement).src = `https://img.vietqr.io/image/${activeDeposit.bank_name}-${activeDeposit.bank_account}-compact2.png?amount=${activeDeposit.amount}&addInfo=${encodeURIComponent(activeDeposit.transfer_content)}&accountName=HOANG%20THE%20VINH`;
+                      const accHolder = encodeURIComponent(activeDeposit.account_holder || import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || '');
+                      (e.target as HTMLImageElement).src = `https://img.vietqr.io/image/${activeDeposit.bank_name}-${activeDeposit.bank_account}-compact2.png?amount=${activeDeposit.amount}&addInfo=${encodeURIComponent(activeDeposit.transfer_content)}&accountName=${accHolder}`;
                     }}
                   />
                   <div className="absolute -bottom-2 -right-2 bg-emerald-500 text-slate-950 text-[10px] font-black px-2.5 py-0.5 rounded-full uppercase tracking-wider flex items-center gap-1 shadow-md">

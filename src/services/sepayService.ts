@@ -2,10 +2,10 @@ import { walletService } from './walletService';
 import { LocalStore } from '../lib/localStore';
 
 export const SEPAY_CONFIG = {
-  apiKey: import.meta.env?.VITE_SEPAY_API_KEY || 'QZTNFZPBS1GVVRZWHUI97CYAAIDSKO2BMWPLJ4VCD0LKAYSFOCLHU0XX4MUPNO58',
-  bankAccount: import.meta.env?.VITE_SEPAY_BANK_ACCOUNT || '0353633308',
+  apiKey: import.meta.env?.VITE_SEPAY_API_KEY || '',
+  bankAccount: import.meta.env?.VITE_SEPAY_BANK_ACCOUNT || '',
   bankName: import.meta.env?.VITE_SEPAY_BANK_NAME || 'MBBank',
-  accountHolder: import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || 'HOANG THE VINH',
+  accountHolder: import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || 'BAN QUẢN TRỊ',
   apiUrl: 'https://my.sepay.vn/userapi/transactions/list',
 };
 

@@ -121,7 +121,7 @@ export const AuthPage: React.FC = () => {
             <Input
               label={mode === 'login' ? 'Tên đăng nhập hoặc Email' : 'Địa chỉ Email'}
               type={mode === 'login' ? 'text' : 'email'}
-              placeholder={mode === 'login' ? 'vinhdnah hoặc user@gmail.com' : 'example@domain.com'}
+              placeholder={mode === 'login' ? 'Nhập username hoặc email...' : 'example@domain.com'}
               value={identifier}
               onChange={(e) => setIdentifier(e.target.value)}
               leftIcon={<Mail className="w-4 h-4 text-slate-400" />}
