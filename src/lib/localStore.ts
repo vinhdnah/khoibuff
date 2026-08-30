@@ -433,12 +433,27 @@ export class LocalStore {
 
     const content = (tx.transaction_content || tx.body || '').toUpperCase();
     const profiles = this.getProfiles();
+    const deposits = this.getDeposits();
 
-    // Tìm tài khoản user có mã memo khớp với nội dung chuyển khoản
-    const matchedProfile = profiles.find((p) => {
-      if (!p.deposit_code) return false;
-      return content.includes(p.deposit_code.toUpperCase());
-    });
+    // 1. Tìm đơn nạp pending khớp chính xác với nội dung chuyển khoản
+    const existingDeposit = deposits.find(
+      (d) =>
+        d.status === 'pending' &&
+        d.transfer_content &&
+        content.includes(d.transfer_content.toUpperCase())
+    );
+
+    // 2. Tìm profile người dùng
+    let matchedProfile = existingDeposit
+      ? profiles.find((p) => p.id === existingDeposit.user_id)
+      : undefined;
+
+    if (!matchedProfile) {
+      matchedProfile = profiles.find((p) => {
+        if (!p.deposit_code) return false;
+        return content.includes(p.deposit_code.toUpperCase());
+      });
+    }
 
     if (!matchedProfile) return null;
 
@@ -449,15 +464,6 @@ export class LocalStore {
 
     // Đánh dấu giao dịch đã cộng tiền để không bị cộng lặp
     this.markSepayTxProcessed(txId);
-
-    // Cập nhật đơn nạp pending nếu có, hoặc tạo mới một đơn nạp thành công
-    const deposits = this.getDeposits();
-    const existingDeposit = deposits.find(
-      (d) =>
-        d.user_id === matchedProfile.id &&
-        d.status === 'pending' &&
-        content.includes((d.transfer_content || '').toUpperCase())
-    );
 
     if (existingDeposit) {
       existingDeposit.status = 'completed';

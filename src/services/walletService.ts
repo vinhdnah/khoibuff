@@ -32,6 +32,7 @@ export const walletService = {
             qr_url: qrUrl,
             bank_name: BANK_CONFIG.bankName,
             bank_account: BANK_CONFIG.accountNo,
+            account_holder: BANK_CONFIG.accountName,
             status: 'pending',
           },
         ])

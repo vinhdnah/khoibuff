@@ -2,25 +2,25 @@ import { walletService } from './walletService';
 import { LocalStore } from '../lib/localStore';
 
 export const SEPAY_CONFIG = {
-  apiKey: import.meta.env?.VITE_SEPAY_API_KEY || '',
-  bankAccount: import.meta.env?.VITE_SEPAY_BANK_ACCOUNT || '',
+  apiKey: import.meta.env?.VITE_SEPAY_API_KEY || 'QZTNFZPBS1GVVRZWHUI97CYAAIDSKO2BMWPLJ4VCD0LKAYSFOCLHU0XX4MUPNO58',
+  bankAccount: import.meta.env?.VITE_SEPAY_BANK_ACCOUNT || '949333308',
   bankName: import.meta.env?.VITE_SEPAY_BANK_NAME || 'MBBank',
-  accountHolder: import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || 'BAN QUẢN TRỊ',
-  apiUrl: 'https://my.sepay.vn/userapi/transactions/list',
+  accountHolder: import.meta.env?.VITE_SEPAY_ACCOUNT_HOLDER || 'HOANG THE VINH',
+  apiUrl: 'https://userapi.sepay.vn/v2/transactions',
 };
 
 export interface SepayTransaction {
   id: number | string;
-  bank_brand_name: string;
-  account_number: string;
-  transaction_date: string;
-  amount_in: number | string;
-  amount_out: number | string;
-  accumulated: number | string;
-  code: string | null;
-  transaction_content: string;
-  reference_number: string;
-  body: string;
+  bank_brand_name?: string;
+  account_number?: string;
+  transaction_date?: string;
+  amount_in?: number | string;
+  amount_out?: number | string;
+  accumulated?: number | string;
+  code?: string | null;
+  transaction_content?: string;
+  reference_number?: string;
+  body?: string;
 }
 
 export const sepayService = {
@@ -35,11 +35,11 @@ export const sepayService = {
   },
 
   /**
-   * Tra cứu danh sách giao dịch gần nhất từ API SePay
+   * Tra cứu danh sách giao dịch gần nhất từ API SePay v2
    */
   async fetchRecentTransactions(): Promise<SepayTransaction[]> {
     try {
-      const url = `${SEPAY_CONFIG.apiUrl}?limit=30`;
+      const url = `${SEPAY_CONFIG.apiUrl}?page=1&per_page=30`;
 
       const res = await fetch(url, {
         headers: {
@@ -53,6 +53,9 @@ export const sepayService = {
       }
 
       const data = await res.json();
+      if (data && Array.isArray(data.data)) {
+        return data.data;
+      }
       if (data && Array.isArray(data.transactions)) {
         return data.transactions;
       }
@@ -76,6 +79,7 @@ export const sepayService = {
       const credited: Array<{ userId: string; amount: number; memo: string }> = [];
 
       for (const tx of transactions) {
+        // 1. Xử lý qua LocalStore
         const result = LocalStore.processIncomingSepayTransaction(tx);
         if (result && result.success && result.userId && result.amount) {
           credited.push({
