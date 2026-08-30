@@ -51,6 +51,21 @@ export const AdminDepositsPage: React.FC = () => {
     }
   };
 
+  const handleApproveDeposit = async (dep: Deposit) => {
+    try {
+      setIsLoading(true);
+      const res = await walletService.confirmDepositPayment(dep.id);
+      if (res.success) {
+        success('Duyệt nạp tiền thành công!', `Đã cộng ${formatVND(dep.amount)} vào số dư khách hàng.`);
+        await loadDeposits();
+      }
+    } catch (err: any) {
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const filteredDeposits = useMemo(() => {
     return deposits.filter((d) => {
       return (
@@ -73,10 +88,9 @@ export const AdminDepositsPage: React.FC = () => {
             Hệ thống tự động kiểm tra nội dung chuyển khoản và cộng tiền qua SePay 24/7. Không cần duyệt thủ công.
           </p>
         </div>
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           <Button
             variant="glow"
-            size="sm"
             onClick={handleManualScanSePay}
             isLoading={isScanning}
             leftIcon={<Zap className="w-4 h-4" />}
@@ -84,9 +98,9 @@ export const AdminDepositsPage: React.FC = () => {
             Quét SePay Ngay
           </Button>
           <Button
-            variant="outline"
-            size="sm"
+            variant="secondary"
             onClick={loadDeposits}
+            isLoading={isLoading}
             leftIcon={<RefreshCw className="w-4 h-4" />}
           >
             Làm Mới
@@ -128,12 +142,13 @@ export const AdminDepositsPage: React.FC = () => {
               <th className="py-3.5 px-3">Mã GD SePay</th>
               <th className="py-3.5 px-3">Trạng thái</th>
               <th className="py-3.5 px-3 text-right">Thời gian</th>
+              <th className="py-3.5 px-3 text-center">Thao tác</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-slate-800/60 text-slate-200">
             {filteredDeposits.length === 0 ? (
               <tr>
-                <td colSpan={8} className="py-8 text-center text-slate-500 text-xs">
+                <td colSpan={9} className="py-8 text-center text-slate-500 text-xs">
                   {isLoading ? 'Đang tải dữ liệu...' : 'Chưa có giao dịch nạp tiền nào'}
                 </td>
               </tr>
@@ -163,7 +178,7 @@ export const AdminDepositsPage: React.FC = () => {
                     <td className="py-4 px-3 whitespace-nowrap">
                       {isSuccess ? (
                         <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
-                          <CheckCircle2 className="w-3 h-3" /> Tự động cộng SePay
+                          <CheckCircle2 className="w-3 h-3" /> Đã hoàn thành
                         </span>
                       ) : (
                         <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-500/20 text-amber-300 border border-amber-500/30">
@@ -173,6 +188,18 @@ export const AdminDepositsPage: React.FC = () => {
                     </td>
                     <td className="py-4 px-3 text-right text-slate-400 whitespace-nowrap text-[11px]">
                       {formatDateTime(dep.created_at)}
+                    </td>
+                    <td className="py-4 px-3 text-center whitespace-nowrap">
+                      {!isSuccess && (
+                        <Button
+                          size="sm"
+                          variant="secondary"
+                          onClick={() => handleApproveDeposit(dep)}
+                          className="text-[11px] py-1 px-2.5 bg-emerald-600/20 hover:bg-emerald-600/40 text-emerald-300 border border-emerald-500/30"
+                        >
+                          Duyệt đơn
+                        </Button>
+                      )}
                     </td>
                   </tr>
                 );
