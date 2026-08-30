@@ -77,3 +77,44 @@ INSERT INTO public.services (platform_id, service_code, name, slug, description,
 ('11111111-1111-1111-1111-111111111106', 'X_LIKE_TWEET', 'Tăng Like bài viết Twitter', 'tang-like-twitter', 'Thả tim bài viết / tweet Twitter', 'Like', 100, 50000, 35000.00, 18000.00, true, false, '10-30 phút', 2),
 ('11111111-1111-1111-1111-111111111107', 'FF_LIKE_PROFILE', 'Tăng Like Profile Free Fire', 'tang-like-profile-ff', 'Tăng lượt thích cho hồ sơ tài khoản game Free Fire', 'Like Profile', 100, 10000, 50000.00, 25000.00, true, false, '15-45 phút', 1)
 ON CONFLICT (service_code) DO NOTHING;
+
+-- 5. Insert Default Admin Account (Template)
+DO $$
+DECLARE
+    v_admin_id UUID := 'aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaa0001';
+BEGIN
+    INSERT INTO auth.users (
+        id, instance_id, aud, role, email, encrypted_password, email_confirmed_at,
+        raw_app_meta_data, raw_user_meta_data, created_at, updated_at
+    ) VALUES (
+        v_admin_id,
+        '00000000-0000-0000-0000-000000000000',
+        'authenticated',
+        'authenticated',
+        'admin@smmpro.vn',
+        crypt('Admin123!', gen_salt('bf')),
+        NOW(),
+        '{"provider":"email","providers":["email"]}'::jsonb,
+        '{"username":"admin","full_name":"Quản Trị Viên"}'::jsonb,
+        NOW(),
+        NOW()
+    ) ON CONFLICT (id) DO UPDATE SET encrypted_password = crypt('Admin123!', gen_salt('bf'));
+
+    INSERT INTO public.profiles (
+        id, email, username, full_name, role, status, balance, deposit_code, api_key, created_at, updated_at
+    ) VALUES (
+        v_admin_id,
+        'admin@smmpro.vn',
+        'admin',
+        'Quản Trị Viên',
+        'admin',
+        'active',
+        100000000.00,
+        'SMM888999',
+        'smm_live_adm_default',
+        NOW(),
+        NOW()
+    ) ON CONFLICT (id) DO UPDATE SET role = 'admin', status = 'active';
+END $$;
+
+

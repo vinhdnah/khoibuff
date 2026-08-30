@@ -1,8 +1,9 @@
 -- Migration: 20260828000000_init_smm_schema.sql
 -- SMM Panel Complete Database Schema with Atomic Operations & Full RLS
 
--- Enable UUID extension
+-- Enable UUID and pgcrypto extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 -- 1. PROFILES TABLE
 CREATE TABLE IF NOT EXISTS public.profiles (

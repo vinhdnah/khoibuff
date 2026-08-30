@@ -70,12 +70,27 @@ export const authService = {
 
   async login(identifier: string, password?: string): Promise<Profile> {
     if (isSupabaseConfigured) {
+      const clean = identifier.trim();
       const { data: profile, error } = await supabase
         .from('profiles')
         .select('*')
-        .or(`email.eq.${identifier},username.eq.${identifier}`)
-        .single();
-      if (error || !profile) throw new Error('Không tìm thấy tài khoản hoặc mật khẩu không đúng');
+        .or(`email.ilike.${clean},username.ilike.${clean}`)
+        .maybeSingle();
+
+      if (error || !profile) {
+        throw new Error('Tài khoản không tồn tại trên hệ thống!');
+      }
+
+      if (password) {
+        const { error: authError } = await supabase.auth.signInWithPassword({
+          email: profile.email,
+          password,
+        });
+        if (authError) {
+          throw new Error('Mật khẩu không chính xác. Vui lòng kiểm tra lại!');
+        }
+      }
+
       return profile;
     }
 
