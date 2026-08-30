@@ -6,7 +6,7 @@ import { Button } from '../components/ui/Button';
 import { Input } from '../components/ui/Input';
 import { useToast } from '../components/ui/Toast';
 import { BrandLogo } from '../components/ui/BrandLogo';
-import { Sparkles, Mail, Lock, User, ArrowRight, CheckCircle2 } from 'lucide-react';
+import { Sparkles, Mail, Lock, User, ArrowRight, CheckCircle2, Eye, EyeOff } from 'lucide-react';
 
 export const AuthPage: React.FC = () => {
   const navigate = useNavigate();
@@ -20,6 +20,7 @@ export const AuthPage: React.FC = () => {
 
   const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState('');
   const [fullName, setFullName] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -128,15 +129,24 @@ export const AuthPage: React.FC = () => {
               required
             />
 
-            <Input
-              label="Mật khẩu"
-              type="password"
-              placeholder="••••••••"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
-              required
-            />
+            <div className="relative">
+              <Input
+                label="Mật khẩu"
+                type={showPassword ? 'text' : 'password'}
+                placeholder="••••••••"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                leftIcon={<Lock className="w-4 h-4 text-slate-400" />}
+                required
+              />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-[38px] text-slate-400 hover:text-slate-200 transition-colors p-1"
+              >
+                {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+              </button>
+            </div>
 
             <Button
               variant="glow"

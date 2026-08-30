@@ -82,36 +82,29 @@ export const authService = {
 
     // 2. Xác thực với Supabase nếu đã cấu hình
     if (isSupabaseConfigured) {
-      let emailToAuth = clean.includes('@') ? clean : `${clean}@gmail.com`;
+      const candidateEmails = clean.includes('@')
+        ? [clean]
+        : [`${clean}@gmail.com`, `${clean}1@gmail.com`];
 
       if (password) {
-        let authRes = await supabase.auth.signInWithPassword({
-          email: emailToAuth,
-          password,
-        });
+        let authRes = null;
+        let lastError = null;
 
-        // Nếu thất bại và identifier không có @, thử tìm email từ profiles
-        if (authRes.error && !clean.includes('@')) {
-          const { data: p } = await supabase
-            .from('profiles')
-            .select('email')
-            .ilike('username', clean)
-            .maybeSingle();
+        for (const emailToAuth of candidateEmails) {
+          authRes = await supabase.auth.signInWithPassword({
+            email: emailToAuth,
+            password,
+          });
 
-          if (p?.email) {
-            emailToAuth = p.email;
-            authRes = await supabase.auth.signInWithPassword({
-              email: emailToAuth,
-              password,
-            });
-          }
+          if (!authRes.error) break;
+          lastError = authRes.error;
         }
 
-        if (authRes.error) {
+        if (!authRes || authRes.error) {
           throw new Error(
-            authRes.error.message === 'Invalid login credentials'
+            lastError?.message === 'Invalid login credentials'
               ? 'Tài khoản hoặc mật khẩu không chính xác!'
-              : `Lỗi kết nối Supabase: ${authRes.error.message}`
+              : `Lỗi kết nối Supabase: ${lastError?.message || 'Không thể đăng nhập'}`
           );
         }
 
