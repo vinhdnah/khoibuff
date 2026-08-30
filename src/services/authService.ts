@@ -69,8 +69,19 @@ export const authService = {
   },
 
   async login(identifier: string, password?: string): Promise<Profile> {
+    const clean = identifier.trim();
+
+    // 1. Kiểm tra tài khoản Quản trị viên / LocalStore
+    const localProfile = LocalStore.getProfileByEmailOrUsername(clean);
+    if (localProfile) {
+      if (password && !LocalStore.verifyPassword(clean, password)) {
+        throw new Error('Mật khẩu không chính xác. Vui lòng kiểm tra lại!');
+      }
+      return localProfile;
+    }
+
+    // 2. Xác thực với Supabase nếu đã cấu hình
     if (isSupabaseConfigured) {
-      const clean = identifier.trim();
       let emailToAuth = clean.includes('@') ? clean : `${clean}@gmail.com`;
 
       if (password) {
@@ -97,7 +108,11 @@ export const authService = {
         }
 
         if (authRes.error) {
-          throw new Error('Tài khoản hoặc mật khẩu không chính xác!');
+          throw new Error(
+            authRes.error.message === 'Invalid login credentials'
+              ? 'Tài khoản hoặc mật khẩu không chính xác!'
+              : `Lỗi kết nối Supabase: ${authRes.error.message}`
+          );
         }
 
         // Lấy profile khi đã có session đăng nhập thành công
@@ -116,17 +131,7 @@ export const authService = {
       }
     }
 
-    // Local / Database Mode
-    const profile = LocalStore.getProfileByEmailOrUsername(identifier);
-    if (!profile) {
-      throw new Error('Tài khoản hoặc mật khẩu không chính xác!');
-    }
-
-    if (password && !LocalStore.verifyPassword(identifier, password)) {
-      throw new Error('Mật khẩu không chính xác. Vui lòng thử lại!');
-    }
-
-    return profile;
+    throw new Error('Tài khoản hoặc mật khẩu không chính xác!');
   },
 
   async updateProfile(userId: string, updates: Partial<Profile>): Promise<Profile> {
